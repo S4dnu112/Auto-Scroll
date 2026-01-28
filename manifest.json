@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Smart Auto-Scroll",
     "version": "1.0",
-    "description": "Auto-scroll based on pixels per second.",
+    "description": "The simplest Auto-Scroll. Customizable toggle key, scroll type (step, continuous), and speed",
     "permissions": [
         "activeTab",
         "scripting",
@@ -11,6 +11,9 @@
     "action": {
         "default_popup": "popup/popup.html",
         "default_title": "Auto-Scroll Settings"
+    },
+    "icons": {
+        "128": "icons/icon128.png"
     },
     "content_scripts": [
         {
