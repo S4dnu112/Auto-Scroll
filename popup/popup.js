@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const stepIntervalSlider = document.getElementById('step-interval');
     const stepIntervalValue = document.getElementById('step-interval-value');
     const hotkeyInput = document.getElementById('hotkey-input');
+    const reverseCheckbox = document.getElementById('reverse-scroll');
 
     chrome.storage.sync.get(['hotkey'], (data) => {
         if (data.hotkey) {
@@ -62,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    chrome.storage.sync.get(['pixelSpeed', 'scrollType', 'stepInterval'], (data) => {
+    chrome.storage.sync.get(['pixelSpeed', 'scrollType', 'stepInterval', 'reverseScroll'], (data) => {
         if (data.pixelSpeed) {
             pixelSlider.value = data.pixelSpeed;
             pixelValue.textContent = data.pixelSpeed;
@@ -77,6 +78,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (data.stepInterval) {
             stepIntervalSlider.value = data.stepInterval;
             stepIntervalValue.textContent = data.stepInterval;
+        }
+        if (data.reverseScroll) {
+            reverseCheckbox.checked = true;
         }
     });
 
@@ -101,6 +105,10 @@ document.addEventListener('DOMContentLoaded', () => {
     pixelSlider.addEventListener('input', (e) => {
         pixelValue.textContent = e.target.value;
         chrome.storage.sync.set({ pixelSpeed: parseInt(e.target.value) });
+    });
+
+    reverseCheckbox.addEventListener('change', (e) => {
+        chrome.storage.sync.set({ reverseScroll: e.target.checked });
     });
 
     function updateButtonStates(isScrolling) {
@@ -160,12 +168,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const speed = parseInt(pixelSlider.value);
             const scrollType = document.querySelector('input[name="scrollType"]:checked').value;
             const stepInterval = parseFloat(stepIntervalSlider.value);
+            const reverseScroll = reverseCheckbox.checked;
             
             sendMessage({
                 action: "START_SCROLL",
                 speed: speed,
                 scrollType: scrollType,
-                stepInterval: stepInterval
+                stepInterval: stepInterval,
+                reverseScroll: reverseScroll
             }, (response) => {
                 if (response) updateButtonStates(true);
             });

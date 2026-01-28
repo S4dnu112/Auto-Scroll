@@ -5,6 +5,7 @@ let currentPixelsPerSecond = 50;
 let currentScrollType = 'continuous';
 let currentStepInterval = 2;
 let currentHotkey = 'j';
+let currentReverseScroll = false;
 
 chrome.storage.sync.get(['hotkey'], (data) => {
   if (data.hotkey) {
@@ -33,11 +34,12 @@ function toggleScrolling() {
   if (isScrolling) {
     stopScrolling();
   } else {
-    chrome.storage.sync.get(['pixelSpeed', 'scrollType', 'stepInterval'], (data) => {
+    chrome.storage.sync.get(['pixelSpeed', 'scrollType', 'stepInterval', 'reverseScroll'], (data) => {
       const speed = data.pixelSpeed || 50;
       const scrollType = data.scrollType || 'continuous';
       const stepInterval = data.stepInterval || 2;
-      startScrolling(speed, scrollType, stepInterval);
+      const reverseScroll = data.reverseScroll || false;
+      startScrolling(speed, scrollType, stepInterval, reverseScroll);
     });
   }
 }
@@ -46,7 +48,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "PING") {
     sendResponse({ status: "ok" });
   } else if (request.action === "START_SCROLL") {
-    startScrolling(request.speed, request.scrollType, request.stepInterval);
+    startScrolling(request.speed, request.scrollType, request.stepInterval, request.reverseScroll);
     sendResponse({ status: "started", isScrolling: true });
   } else if (request.action === "STOP_SCROLL") {
     stopScrolling();
@@ -57,11 +59,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   return true;
 });
 
-function startScrolling(speed, scrollType, stepInterval) {
+function startScrolling(speed, scrollType, stepInterval, reverseScroll) {
   stopScrolling();
   isScrolling = true;
   currentScrollType = scrollType || 'continuous';
   currentStepInterval = stepInterval || 2;
+  currentReverseScroll = reverseScroll || false;
   startPixelScroll(speed);
 }
 
@@ -99,7 +102,8 @@ function startPixelScroll(speed) {
       accumulatedScroll += pixelsToScroll;
 
       if (accumulatedScroll >= 1) {
-        const pixels = Math.floor(accumulatedScroll);
+        const pixelsToMove = Math.floor(accumulatedScroll);
+        const pixels = pixelsToMove * (currentReverseScroll ? -1 : 1);
 
         const target = getScrollTarget();
         if (target === window) {
@@ -108,7 +112,7 @@ function startPixelScroll(speed) {
           target.scrollTop += pixels;
         }
 
-        accumulatedScroll -= pixels;
+        accumulatedScroll -= pixelsToMove;
       }
 
       scrollInterval = requestAnimationFrame(step);
@@ -119,7 +123,7 @@ function startPixelScroll(speed) {
   } else {
     function doStep() {
       if (!isScrolling) return;
-      const pixels = Math.floor(currentPixelsPerSecond * currentStepInterval);
+      const pixels = Math.floor(currentPixelsPerSecond * currentStepInterval) * (currentReverseScroll ? -1 : 1);
 
       const target = getScrollTarget();
       if (target === window) {
