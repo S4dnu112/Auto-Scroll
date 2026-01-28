@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "Smart Auto-Scroll",
+    "name": "Auto-Scroll",
     "version": "1.0",
     "description": "The simplest Auto-Scroll. Customizable toggle key, scroll type (step, continuous), and speed",
     "permissions": [
@@ -15,14 +15,16 @@
     "icons": {
         "128": "icons/icon128.png"
     },
-    "content_scripts": [
-        {
-            "matches": [
-                "<all_urls>"
-            ],
-            "js": [
-                "scripts/content.js"
-            ]
+    "background": {
+        "service_worker": "scripts/background.js"
+    },
+    "commands": {
+        "toggle-scroll": {
+            "suggested_key": {
+                "default": "Alt+J",
+                "mac": "Alt+J"
+            },
+            "description": "Toggle auto-scroll"
         }
-    ]
+    }
 }

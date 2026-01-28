@@ -8,31 +8,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const stepIntervalControl = document.getElementById('step-interval-control');
     const stepIntervalSlider = document.getElementById('step-interval');
     const stepIntervalValue = document.getElementById('step-interval-value');
-    const hotkeyInput = document.getElementById('hotkey-input');
+    const shortcutDisplay = document.getElementById('shortcut-display');
+    const changeShortcut = document.getElementById('change-shortcut');
     const reverseCheckbox = document.getElementById('reverse-scroll');
 
-    chrome.storage.sync.get(['hotkey'], (data) => {
-        if (data.hotkey) {
-            hotkeyInput.value = data.hotkey;
+    // Load and display the current shortcut
+    chrome.commands.getAll((commands) => {
+        const toggleCommand = commands.find(cmd => cmd.name === 'toggle-scroll');
+        if (toggleCommand && toggleCommand.shortcut) {
+            shortcutDisplay.textContent = toggleCommand.shortcut;
+        } else {
+            shortcutDisplay.textContent = 'Not set';
         }
     });
 
-    hotkeyInput.addEventListener('input', (e) => {
-        let value = e.target.value.toLowerCase();
-        if (value.length > 0) {
-            value = value[value.length - 1];
-            e.target.value = value;
-            chrome.storage.sync.set({ hotkey: value });
-        }
-    });
-
-    hotkeyInput.addEventListener('keydown', (e) => {
+    // Open Chrome's keyboard shortcuts page
+    changeShortcut.addEventListener('click', (e) => {
         e.preventDefault();
-        const key = e.key.toLowerCase();
-        if (key.length === 1 && key.match(/[a-z]/)) {
-            hotkeyInput.value = key;
-            chrome.storage.sync.set({ hotkey: key });
-        }
+        chrome.tabs.create({ url: 'chrome://extensions/shortcuts' });
     });
 
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {

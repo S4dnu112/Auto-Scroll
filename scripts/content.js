@@ -4,45 +4,7 @@ let currentPixelsPerSecond = 50;
 
 let currentScrollType = 'continuous';
 let currentStepInterval = 2;
-let currentHotkey = 'j';
 let currentReverseScroll = false;
-
-chrome.storage.sync.get(['hotkey'], (data) => {
-  if (data.hotkey) {
-    currentHotkey = data.hotkey;
-  }
-});
-
-chrome.storage.onChanged.addListener((changes, area) => {
-  if (area === 'sync' && changes.hotkey) {
-    currentHotkey = changes.hotkey.newValue;
-  }
-});
-
-document.addEventListener('keydown', (e) => {
-  if (e.key === currentHotkey && !e.ctrlKey && !e.altKey && !e.metaKey) {
-    const target = e.target;
-    if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) {
-      return;
-    }
-    e.preventDefault();
-    toggleScrolling();
-  }
-});
-
-function toggleScrolling() {
-  if (isScrolling) {
-    stopScrolling();
-  } else {
-    chrome.storage.sync.get(['pixelSpeed', 'scrollType', 'stepInterval', 'reverseScroll'], (data) => {
-      const speed = data.pixelSpeed || 50;
-      const scrollType = data.scrollType || 'continuous';
-      const stepInterval = data.stepInterval || 2;
-      const reverseScroll = data.reverseScroll || false;
-      startScrolling(speed, scrollType, stepInterval, reverseScroll);
-    });
-  }
-}
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "PING") {
@@ -50,9 +12,13 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   } else if (request.action === "START_SCROLL") {
     startScrolling(request.speed, request.scrollType, request.stepInterval, request.reverseScroll);
     sendResponse({ status: "started", isScrolling: true });
+    // Notify background of state change
+    chrome.runtime.sendMessage({ action: "UPDATE_STATE", isScrolling: true });
   } else if (request.action === "STOP_SCROLL") {
     stopScrolling();
     sendResponse({ status: "stopped", isScrolling: false });
+    // Notify background of state change
+    chrome.runtime.sendMessage({ action: "UPDATE_STATE", isScrolling: false });
   } else if (request.action === "GET_STATUS") {
     sendResponse({ isScrolling: isScrolling });
   }
