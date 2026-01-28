@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auto-Scroll</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+  <div id="main-view">
+    <div class="container">
+      <h1>Auto-Scroll</h1>
+      <div class="hotkey-display">
+        <input type="text" id="hotkey-input" maxlength="1" value="j"> to toggle
+      </div>
+
+      <div class="controls">
+        <div id="pixel-controls">
+          <label for="pixel-speed">Speed (px/s): <span id="pixel-value">50</span></label>
+          <input type="range" id="pixel-speed" min="1" max="500" value="50">
+        </div>
+      </div>
+
+      <div class="type-select">
+        <label>Type:</label>
+        <label>
+          <input type="radio" name="scrollType" value="continuous" checked> Continuous
+        </label>
+        <label>
+          <input type="radio" name="scrollType" value="step"> Step
+        </label>
+      </div>
+
+      <div id="step-interval-control" style="display: none;">
+        <div class="controls">
+          <label for="step-interval">Step Interval (seconds): <span id="step-interval-value">2</span></label>
+          <input type="range" id="step-interval" min="0.5" max="10" step="0.5" value="2">
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="toggle-btn" class="btn primary">Start</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="error-view" style="display: none;">
+    <div class="error-content">
+      <h2>Smart Auto-Scroll is not allowed to run on this page.</h2>
+      <p>Your browser does not run web extensions on certain pages, usually for security reasons.</p>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,25 @@
+{
+    "manifest_version": 3,
+    "name": "Smart Auto-Scroll",
+    "version": "1.0",
+    "description": "Auto-scroll based on pixels per second.",
+    "permissions": [
+        "activeTab",
+        "scripting",
+        "storage"
+    ],
+    "action": {
+        "default_popup": "popup/popup.html",
+        "default_title": "Auto-Scroll Settings"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "scripts/content.js"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,182 @@
+body {
+  width: 300px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f4f9;
+  color: #333;
+  margin: 0;
+  padding: 16px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+h1 {
+  font-size: 1.25rem;
+  margin: 0;
+  text-align: center;
+  color: #4a4a4a;
+}
+
+.hotkey-display {
+  text-align: center;
+  font-size: 0.7rem;
+  color: #6c757d;
+  margin-top: 2px;
+  margin-bottom: 4px;
+}
+
+.hotkey-display input {
+  width: 20px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 2px 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  background-color: #f8f9fa;
+  text-transform: lowercase;
+}
+
+.hotkey-display input:focus {
+  outline: none;
+  border-color: #007bff;
+  background-color: #fff;
+}
+
+.mode-select {
+  display: flex;
+  justify-content: space-around;
+  background: #fff;
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.controls {
+  background: #fff;
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.controls label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+input[type="range"] {
+  width: 100%;
+}
+
+input[type="range"] {
+  width: 100%;
+}
+
+.type-select {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  background: #fff;
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  font-size: 0.9rem;
+  align-items: center;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.primary.active::after {
+  content: ' •';
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.info-footer {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid #eee;
+  font-size: 0.8rem;
+  color: #777;
+  text-align: center;
+}
+
+.info-footer p {
+  margin: 0;
+}
+
+/* Error View Styles */
+#error-view {
+  padding: 20px;
+  text-align: center;
+}
+
+.error-content h2 {
+  font-size: 1.1rem;
+  color: #d93025;
+  /* Reddish error color or neutral dark */
+  color: #333;
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+.error-content p {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.5;
+  margin: 0;
+}
