@@ -7,16 +7,6 @@ chrome.commands.onCommand.addListener(async (command) => {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
     if (!tab || !tab.id) return;
 
-    // Check if we have permission to access the tab's URL
-    try {
-      if (tab.url) {
-        const hasPermission = await chrome.permissions.contains({ origins: [tab.url] });
-        if (!hasPermission) return;
-      }
-    } catch (e) {
-      return;
-    }
-
     await toggleScroll(tab.id);
   }
 });
