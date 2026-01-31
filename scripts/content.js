@@ -54,6 +54,8 @@ function startPixelScroll(speed) {
     scrollInterval = null;
   }
 
+  const scrollTarget = getScrollTarget();
+
   if (currentScrollType === 'continuous') {
     let lastTime = performance.now();
     let accumulatedScroll = 0;
@@ -71,11 +73,10 @@ function startPixelScroll(speed) {
         const pixelsToMove = Math.floor(accumulatedScroll);
         const pixels = pixelsToMove * (currentReverseScroll ? -1 : 1);
 
-        const target = getScrollTarget();
-        if (target === window) {
+        if (scrollTarget === window) {
           window.scrollBy(0, pixels);
         } else {
-          target.scrollTop += pixels;
+          scrollTarget.scrollTop += pixels;
         }
 
         accumulatedScroll -= pixelsToMove;
@@ -91,11 +92,10 @@ function startPixelScroll(speed) {
       if (!isScrolling) return;
       const pixels = Math.floor(currentPixelsPerSecond * currentStepInterval) * (currentReverseScroll ? -1 : 1);
 
-      const target = getScrollTarget();
-      if (target === window) {
+      if (scrollTarget === window) {
         window.scrollBy(0, pixels);
       } else {
-        target.scrollTop += pixels;
+        scrollTarget.scrollTop += pixels;
       }
     }
     scrollInterval = setInterval(doStep, currentStepInterval * 1000);
@@ -104,12 +104,14 @@ function startPixelScroll(speed) {
 
 function getScrollTarget() {
   const allElements = document.getElementsByTagName('*');
-  let maxScrollHeight = 0;
+  let maxWidth = 0;
   let maxElement = window;
 
   if (document.documentElement.scrollHeight > window.innerHeight &&
     getComputedStyle(document.body).overflowY !== 'hidden' &&
     getComputedStyle(document.documentElement).overflowY !== 'hidden') {
+    maxWidth = window.innerWidth;
+    maxElement = window;
   }
 
   for (let el of allElements) {
@@ -118,16 +120,17 @@ function getScrollTarget() {
     const hasScrollableContent = el.scrollHeight > el.clientHeight;
 
     if (isScrollable && hasScrollableContent) {
-      if (el.scrollHeight > maxScrollHeight) {
-        maxScrollHeight = el.scrollHeight;
+      const rect = el.getBoundingClientRect();
+      if (rect.width > maxWidth) {
+        maxWidth = rect.width;
         maxElement = el;
       }
     }
   }
 
-  if (maxElement !== window && maxElement.clientHeight > window.innerHeight * 0.5) {
-    return maxElement;
+  if (maxElement === document.body || maxElement === document.documentElement) {
+    return window;
   }
 
-  return window;
+  return maxElement;
 }
