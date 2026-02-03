@@ -1,29 +1,31 @@
-# Smart Auto-Scroll
+# Auto-Scroll
 
-A browser extension for automatic page scrolling with customizable speed and behavior.
+The simplest Auto-Scroll extension for hands-free reading.
+
+[Available on the Chrome Web Store](https://chromewebstore.google.com/detail/auto-scroll/nangpjnofohhhhofaifkhgidjfjknlgl)
 
 ## Features
 
-- **Adjustable Speed** - Control scroll speed from 1 to 500 pixels per second
-- **Scroll Modes**
-  - **Continuous** - Smooth, constant scrolling
-  - **Step** - Jump at fixed intervals (0.5 to 10 seconds)
-- **Keyboard Shortcut** - Toggle scrolling with a customizable hotkey (default: `j`)
-- **Smart Scroll Detection** - Automatically detects the correct scrollable element on the page
+- Smooth continuous scrolling
+- Step-by-step interval scrolling
+- Fully adjustable scroll speed (1-1000 px/s)
+- Customizable step timing (0.5-10s)
+- Reverse scrolling direction
+- Smart detection of the main scrollable area
+- Quick-toggle keyboard shortcut (Alt+J)
+- Automatic saving of your settings
 
 ## Usage
 
-1. Click the extension icon to open the popup
-2. Adjust the scroll speed using the slider
-3. Select scroll type (Continuous or Step)
-4. Click **Start** to begin scrolling, or press the hotkey
-5. Click **Stop** or press the hotkey again to stop
+1. Click the extension icon to open the popup.
+2. Adjust the scroll speed and mode (Continuous or Step).
+3. Click **Start** or press **Alt+J** to begin scrolling.
+4. Click **Stop** or press **Alt+J** again to stop.
 
 ## Keyboard Shortcut
 
-- Default key: `j`
-- Change it by clicking the input box in the popup and pressing a new key
-- The shortcut is disabled when typing in input fields or text areas
+- Default: **Alt+J**
+- You can customize this shortcut by clicking "change" in the popup menu or visiting `chrome://extensions/shortcuts`.
 
 ## License
 GNU GENERAL PUBLIC LICENSE
