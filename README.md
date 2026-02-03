@@ -2,7 +2,9 @@
 
 The simplest Auto-Scroll extension for hands-free reading.
 
-[Available on the Chrome Web Store](https://chromewebstore.google.com/detail/auto-scroll/nangpjnofohhhhofaifkhgidjfjknlgl)
+<a href="https://chromewebstore.google.com/detail/auto-scroll/nangpjnofohhhhofaifkhgidjfjknlgl">
+  <img src="assets/available_on_chrome_webstore.png" width="250" alt="Available on the Chrome Web Store">
+</a>
 
 ## Features
 
