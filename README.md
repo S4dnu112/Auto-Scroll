@@ -14,6 +14,7 @@ The simplest Auto-Scroll extension for hands-free reading.
 - Smart detection of the main scrollable area
 - Quick-toggle keyboard shortcut (Alt+J)
 - Automatic saving of your settings
+- Automatic Dark/Light mode support
 
 ## Usage
 

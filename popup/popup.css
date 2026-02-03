@@ -180,3 +180,54 @@ input[type="range"] {
   line-height: 1.5;
   margin: 0;
 }
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #202124;
+    color: #e8eaed;
+  }
+
+  h1 {
+    color: #e8eaed;
+  }
+
+  .hotkey-display {
+    color: #9aa0a6;
+  }
+
+  #change-shortcut {
+    color: #8ab4f8;
+  }
+
+  .mode-select,
+  .controls,
+  .type-select {
+    background: #292a2d;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .hotkey-display input {
+    background-color: #292a2d;
+    border-color: #5f6368;
+    color: #e8eaed;
+  }
+
+  .hotkey-display input:focus {
+    background-color: #303134;
+    border-color: #8ab4f8;
+  }
+
+  .error-content h2 {
+    color: #e8eaed;
+  }
+
+  .error-content p {
+    color: #bdc1c6;
+  }
+
+  .info-footer {
+    border-top-color: #3c4043;
+    color: #9aa0a6;
+  }
+}
